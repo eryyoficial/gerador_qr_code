@@ -10,7 +10,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #34db7a;
+  background-color: #4283c0;
 }
 
 .container {
@@ -61,7 +61,7 @@ body {
 }
 
 #qr-form button {
-  background-color: #086824;
+  background-color: #194d7e;
   margin-top: 20px;
   color: #fff;
   font-size: 1.2rem;
