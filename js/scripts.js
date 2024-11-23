@@ -1,39 +1,51 @@
+//========================================== DECLARAÇÃO DOS SELECTORES ========================================== 
 const container = document.querySelector(".container");
-const qrCodeBtn = document.querySelector("#qr-form button");
+const button = document.querySelector("#qr-form button");
+const input = container.querySelector("#qr-form input");
+const img = container.querySelector("#qr-code img");
 
-const qrCodeInput = container.querySelector("#qr-form input");
-const qrCodeImg = container.querySelector("#qr-code img");
 
-// Gerar código
-function generateQrCode() {
-  let qrCodeInputValue = qrCodeInput.value;
 
-  if (!qrCodeInputValue) return;
-
-  qrCodeBtn.innerText = "Gerando código...";
-
-  qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrCodeInputValue}`;
-
-  qrCodeImg.addEventListener("load", () => {
+//========================================== FUNÇÕES ========================================== 
+//Função Gerar QR Code
+function gerarQR() {
+  const inputValue = input.value;
+  if (!inputValue) {
+    return;
+  }
+  button.innerHTML = "Gerando QR Code...";
+  img.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${inputValue}`;
+  img.addEventListener("load", () => {
     container.classList.add("active");
-    qrCodeBtn.innerText = "Código criado!";
+    button.innerHTML = "Sucesso!";
+    button.addEventListener("mouseenter", () => {
+      button.innerHTML = "Gerar novamente...";
+    });
+    button.addEventListener("mouseout", () => {
+      button.innerHTML = "Sucesso!";
+    });
   });
+
+  console.log(input.value);
 }
 
-qrCodeBtn.addEventListener("click", () => {
-  generateQrCode();
+//========================================== EVENTOS ========================================== 
+//Evento Clicar no Botão
+button.addEventListener("click", () => {
+  gerarQR();
 });
 
-qrCodeInput.addEventListener("keydown", (e) => {
+//Evento Enter no Input
+input.addEventListener("keydown", (e) => {
   if (e.code === "Enter") {
-    generateQrCode();
+    gerarQR();
   }
 });
 
-// Limpar área do código
-qrCodeInput.addEventListener("keyup", () => {
-  if (!qrCodeInput.value) {
+//Evento Limpar o Input
+input.addEventListener("keyup", () => {
+  if (!input.value) {
     container.classList.remove("active");
-    qrCodeBtn.innerText = "Gerar QR Code";
+    button.innerText = "Gerar QR Code";
   }
 });
